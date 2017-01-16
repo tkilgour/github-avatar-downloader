@@ -26,11 +26,15 @@ function downloadImageByURL (url, filePath) {
          .pipe(fs.createWriteStream(filePath));
 }
 
-getRepoContributors(REPO_OWNER, REPO, function(err, result) {
-  result.forEach(function (user) {
-    var login = user.login;
-    var avatarURL = user.avatar_url;
+if (REPO_OWNER && REPO) {
+  getRepoContributors(REPO_OWNER, REPO, function(err, result) {
+    result.forEach(function (user) {
+      var login = user.login;
+      var avatarURL = user.avatar_url;
 
-    downloadImageByURL(avatarURL, './avatars/' + login + '.jpg');
-  })
-});
+      downloadImageByURL(avatarURL, './avatars/' + login + '.jpg');
+    })
+  });
+} else {
+  console.log("Error: Please enter two arguments for the 'Repo Owner' and 'Repo Name'.");
+}
