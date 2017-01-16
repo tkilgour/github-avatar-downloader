@@ -21,19 +21,14 @@ function downloadImageByURL (url, filePath) {
          .on('error', function (err) {
            throw err;
          })
-         .on('response', function (response) {
-           console.log('Downloading image...');
-         })
-         .on('end', function () {
-           console.log('Download complete.');
-         })
          .pipe(fs.createWriteStream(filePath));
 }
 
-downloadImageByURL ('https://avatars.githubusercontent.com/u/1615?v=3', './avatars/tmp.jpg');
-
 getRepoContributors("jquery", "jquery", function(err, result) {
   result.forEach(function (user) {
-    console.log(user.avatar_url);
+    var login = user.login;
+    var avatarURL = user.avatar_url;
+
+    downloadImageByURL(avatarURL, './avatars/' + login + '.jpg');
   })
 });
