@@ -2,6 +2,9 @@ require('dotenv').config();
 var request = require("request");
 var fs = require("fs");
 
+// GitHub Authorization – Please create a .env with the following two lines:
+// GITHUB_USER = <Your Username>
+// GITHUB_TOKEN = <Your Token>
 var GITHUB_USER = process.env.GITHUB_USER;
 var GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 var REPO_OWNER = process.argv[2];
@@ -16,7 +19,6 @@ function getRepoContributors(repoOwner, repoName, cb) {
         url: "https://" + GITHUB_USER + ":" + GITHUB_TOKEN + "@api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
         headers: {"user-agent": "GitHub Avatar Downloader - Student Project"}
     };
-
     request(options, function (error, response, body) {
         cb(error, JSON.parse(body));
     });
